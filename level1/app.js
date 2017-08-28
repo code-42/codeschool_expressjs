@@ -22,7 +22,6 @@ app.get('/locations', function(request, response){
 
 // In order to better reflect the domain of our application, we want to change our existing route from /locations to /cities.
 
-
 var express = require('express');
 var app = express();
 
@@ -38,7 +37,5 @@ app.get('/locations', function(request, response){
 app.listen(3001, function () {
   console.log("Running Express");
 });
-
-
 
 
