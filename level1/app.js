@@ -18,3 +18,27 @@ app.get('/locations', function(request, response){
   console.log("Running Express");
 });
 
+// 1.6 Cities 250 pts
+
+// In order to better reflect the domain of our application, we want to change our existing route from /locations to /cities.
+
+
+var express = require('express');
+var app = express();
+
+app.get('/cities', function (request, response) {                                                                                                     
+  var cities = ['Caspiana', 'Indigo', 'Paradise'];
+  response.send(cities);
+});
+app.get('/locations', function(request, response){
+  response.redirect(301, '/cities');
+});  
+
+
+app.listen(3001, function () {
+  console.log("Running Express");
+});
+
+
+
+
