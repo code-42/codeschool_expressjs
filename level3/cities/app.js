@@ -1,9 +1,9 @@
-// 3.6 Flexible Routes 250 pts
+// 3.8 Dynamic Routes II 250 pts
 
-// Our current route only works when the city name argument matches exactly the properties in the cities object. This is a problem. We need a way to make our code more flexible.
-// Task 1/2 Inside our route, call the parseCityName() function passing in the name parameter. Assign the return value to the new variable called cityName.
-// Task 2/2 Now, using the city name returned from the parseCityName() function, lookup the corresponding description using the cities object and store it in the correct variable that will make the rest of the function work as intended.
-
+// Whenever we use our name parameter we want to parse it a specific way. Let's clean up our existing code so that all routes with a name parameter get the same special handling.
+// Task 1/3 Call app.param() to intercept requests that contain an argument called 'name'. Remember app.param() takes a callback function as its second argument, which uses the same signature as a middleware.
+// Task 2/3 Inside the app.param() callback function, call the parseCityName() function with the submitted name parameter. Set the return value to a new property in the request object called cityName.
+// Task 3/3 Finally, call a function that moves processing to the next function in the stack.
 
 var express = require('express');
 var app = express();
@@ -16,20 +16,24 @@ var cities = {
   'Flotilla': 'Bustling urban oasis'
 };
 
-app.get('/cities/:name', function (request, response) {
-  var cityName = parseCityName(request.params.name);
-  var cityInfo = cities[cityName];
+app.param('name', function(request, response, next){
+  var name = parseCityName(request.params.name);
+  request.cityName = name;
+  next();
+});
 
+app.get('/cities/:name', function (request, response) {
+  var cityInfo = cities[request.cityName];
   if(cityInfo) {
     response.json(cityInfo);
   } else {
-    response.status(404).json('City not found');
+    response.status(404).json("City not found");
   }
 });
 
-function parseCityName(name) {
+function parseCityName(name){
   var parsedName = name[0].toUpperCase() + name.slice(1).toLowerCase();
   return parsedName;
 }
 
-app.listen(3000);                                                                                                                                                                                                                                                                                                                
+app.listen(3000);                                                                                                                                                                                                                                                                                                            
