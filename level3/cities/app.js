@@ -1,9 +1,9 @@
-// 3.4 City Information 250 pts
+// 3.6 Flexible Routes 250 pts
 
-// Now lets look up some information about the city.
-// Task 1/3 Inside of our dynamic route, grab the name submitted by the user, lookup the city information on the cities object and assign it to the cityInfo variable.
-// Task 2/3 Check to see if cityInfo exists and if so, respond with the cityInfo in JSON format.
-// Task 3/3 If cityInfo does not exist, respond with a 404 HTTP status code and a JSON message that says "City not found".
+// Our current route only works when the city name argument matches exactly the properties in the cities object. This is a problem. We need a way to make our code more flexible.
+// Task 1/2 Inside our route, call the parseCityName() function passing in the name parameter. Assign the return value to the new variable called cityName.
+// Task 2/2 Now, using the city name returned from the parseCityName() function, lookup the corresponding description using the cities object and store it in the correct variable that will make the rest of the function work as intended.
+
 
 var express = require('express');
 var app = express();
@@ -17,12 +17,19 @@ var cities = {
 };
 
 app.get('/cities/:name', function (request, response) {
-  var cityInfo = cities[request.params.name];
-  if(cityInfo){
+  var cityName = parseCityName(request.params.name);
+  var cityInfo = cities[cityName];
+
+  if(cityInfo) {
     response.json(cityInfo);
   } else {
-    response.status(404).json("City not found");
+    response.status(404).json('City not found');
   }
 });
 
-app.listen(3000);
+function parseCityName(name) {
+  var parsedName = name[0].toUpperCase() + name.slice(1).toLowerCase();
+  return parsedName;
+}
+
+app.listen(3000);                                                                                                                                                                                                                                                                                                                
