@@ -1,30 +1,28 @@
-// 3.2 City Search 250 pts
+// 3.4 City Information 250 pts
 
-// We want to create an endpoint that we can use to filter cities. Follow the tasks below to to create this new route.
-// Task 1/3 Create a new route for GET requests to '/cities'. The second argument should be a callback function which takes request and response.
-// Task 2/3 From inside of our route, create an if statement that checks whether a value is set to the query string parameter search.
-// Task 3/3 Inside of the if block, call the citySearch() function, passing in the user submitted parameter for search. Then return the result of the function as a JSON response.
+// Now lets look up some information about the city.
+// Task 1/3 Inside of our dynamic route, grab the name submitted by the user, lookup the city information on the cities object and assign it to the cityInfo variable.
+// Task 2/3 Check to see if cityInfo exists and if so, respond with the cityInfo in JSON format.
+// Task 3/3 If cityInfo does not exist, respond with a 404 HTTP status code and a JSON message that says "City not found".
 
 var express = require('express');
 var app = express();
 
-var cities = ['Caspiana', 'Indigo', 'Paradise'];
+var cities = {
+  'Lotopia': 'Rough and mountainous',
+  'Caspiana': 'Sky-top island',
+  'Indigo': 'Vibrant and thriving',
+  'Paradise': 'Lush, green plantation',
+  'Flotilla': 'Bustling urban oasis'
+};
 
-app.get('/cities', function(request, response){
-  var search = request.query.search;
-  if(search){
-    var result = citySearch(search);
-    response.json(result);
+app.get('/cities/:name', function (request, response) {
+  var cityInfo = cities[request.params.name];
+  if(cityInfo){
+    response.json(cityInfo);
+  } else {
+    response.status(404).json("City not found");
   }
 });
-
-function citySearch (keyword) {
-  var regexp = RegExp(keyword, 'i');
-  var result = cities.filter(function (city) {
-    return city.match(regexp);
-  });
-
-  return result;
-}
 
 app.listen(3000);
