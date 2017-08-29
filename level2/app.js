@@ -1,17 +1,18 @@
-// 2.4 Express Static
-
-// Change the code in app.js to use the express-static middleware instead of the response.sendFile() function.
-
 var express = require('express');
 var app = express();
 
+var logger = require('./logger');
+app.use(logger);
+
 app.use(express.static('public'));
 
-app.get('/cities', function(req, res){
-  var cities = ['Lotopia', 'Caspiana', 'Indigo'];
-  res.send(cities);
+app.get('/blocks', function(request, response){
+  var blocks = ['Fixed', 'Movable', 'Rotating'];
+  response.json(blocks);
 });
 
-app.listen(3001);
+app.listen(process.env.PORT, function(){
+    console.log('Listening on ' + process.env.PORT + '\n');
+});
 
 
