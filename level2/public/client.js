@@ -1,6 +1,6 @@
 $(function(){
 
-  $.get( '/blocks', appendToList); 
+  $.get('/blocks', appendToList); 
 
   function appendToList(blocks) {
     var list = [];
