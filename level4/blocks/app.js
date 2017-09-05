@@ -20,7 +20,9 @@ app.post('/cities', parseUrlencoded, function (request, response) {
   }
 });
 
-app.listen(3000);
+app.listen(process.env.PORT, function(){
+    console.log('Listening on port ' + process.env.PORT + '\n');
+});
 
 // 4.6 Delete Route 250 pts
 
@@ -55,7 +57,9 @@ app.delete('/cities/:name', function(request, response){
 
 });
 
-app.listen(3000);
+app.listen(process.env.PORT, function(){
+    console.log('Listening on port ' + process.env.PORT + '\n');
+});
 
 function parseCityName(name) {
   var parsedName = name[0].toUpperCase() + name.slice(1).toLowerCase();
