@@ -13,4 +13,16 @@ console.log("2.found client.js");
     }
     $('#cities-list').html(list);
   }
+// });
+
+// $(function(){
+    // $("#cities-list").change(function(event){
+    //     event.preventDefault();
+    //     var city = $('#cities-list').val();
+    //     console.log('21.dropval == ' + city);
+
+    //     $('#state').html(city);
+
+    //     console.log(Object.keys(city));
+    // });    
 });
