@@ -1,3 +1,4 @@
+// quiz level 3
 $(function(){
 console.log("2.found client.js");
 
@@ -8,7 +9,7 @@ console.log("2.found client.js");
     var list = [];
     for(var i in cities){
       console.log("9. " + cities[i]);
-      list.push($('<li>', { text: cities[i] }));
+      list.push($('<option value="' +  cities[i] + '">' + cities[i] + '</option>'));
     }
     $('#cities-list').html(list);
   }

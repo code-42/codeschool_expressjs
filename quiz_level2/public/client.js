@@ -1,3 +1,4 @@
+// quiz level 2
 $(function(){
 
   $.get( '/cities', appendToList); 

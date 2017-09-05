@@ -53,7 +53,7 @@ app.get('/cities', function(request, response){
       response.json(keys.slice(0, request.query.limit));
   }
   else {
-      console.log("34.request.limit is 0 or omitted");
+      console.log("56.request.limit is 0 or omitted");
       response.json(Object.keys(cities));
   }
 });
@@ -63,18 +63,20 @@ app.param('name', function(request, response, next){
     var name = request.params.name;
     var city = name[0].toUpperCase() + name.slice(1).toLowerCase();
     request.cityName = city;
-    console.log("36. == ", request.cityName);
+    console.log("66. == ", request.cityName);
     next();
 });
 
 // Add a dynamic route to /cities. This should respond with the state that the city resides in.
 app.get('/cities/:name', function(request, response){
     var state = cities[request.cityName];
-    console.log("65. == " + state);
+    console.log("73. == " + state);
+    // document.getElementById('state').value = state;
+    // $('#state').html(state);
     response.json(state);
+    
 });
 
 app.listen(process.env.PORT, function(){
     console.log('Listening on port ' + process.env.PORT + '\n');
 });
-
