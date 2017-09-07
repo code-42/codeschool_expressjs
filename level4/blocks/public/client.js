@@ -15,10 +15,10 @@ $(function(){
     $('.block-list').append(list);
   }
   
-  $('form').on('submit', funvtion(event){
+  $('form').on('submit', function(event){
     event.preventDefault();
     var form = $(this);
-    // transforms the form tada to URL-encoded notation
+    // serialize() transforms the form tada to URL-encoded notation
     var blockData = form.serialize();
     
     $.ajax({
@@ -26,7 +26,7 @@ $(function(){
     }).done(function(blockname){
       // array with the new block as its single argument
       appendToList([blockName]);
-      // clean up form text input fields
+      // clear form text input fields
       form.trigger('reset');
     });
   });
