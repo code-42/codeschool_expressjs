@@ -3,10 +3,10 @@
 var express = require('express');
 var app = express();
 
-app.use(express.static('public'));
-
 var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({ extended: false });
+
+app.use(express.static('public'));
 
 var blocks = {
     'Fixed': 'Fastened securely in position',
@@ -35,7 +35,7 @@ app.get('/', function(request, response){
 app.get('/blocks', function(request, response){
   // var blocks = ['Fixed', 'Movable', 'Rotating'];
   // returns all in blocks object
-  response.json(Object.keys(blocks));
+  response.send(Object.keys(blocks));
 });
 
 // blocks route
