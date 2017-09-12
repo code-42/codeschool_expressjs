@@ -26,7 +26,11 @@ Form should confirm that lat lon are numbers.
 var express = require('express');
 var app = express();
 
-var bodyParser = require('bodyParser');
+// var bodyParser = require('body-parser');
+
+const bodyParser = require('body-parser');
+// app.use(bodyParser);
+
 var parseUrlencoded = bodyParser.urlencoded({extended: false});
 
 app.use(express.static('public'));
@@ -36,14 +40,13 @@ var cities = {
     'Chicken': 'Alaska',
     'Experiment': 'Georgia',
     'Whynot': 'North Carolina',
-    'Zap': 'North Dakota',
-    // 'Hazard': 'Nebraska',
+    'Hazard': 'Nebraska',
     'Hell': 'Michigan'
 };
 
 console.log("32. cities.length == " + Object.keys(cities).length);
 console.log("33. cities == " + Object.keys(cities));
-console.log("34. states == " + Object.values(cities));
+// console.log("34. states == " + Object.values(cities));
 
 // A /cities route that will display all cities. (minimum of 5 cities)
 // The /cities route should accept a limit query that will send back:
@@ -74,6 +77,7 @@ app.get('/cities', function(request, response){
 app.param('name', function(request, response, next){
     var name = request.params.name;
     var city = name[0].toUpperCase() + name.slice(1).toLowerCase();
+    console.log("80. city == ", city);
     request.cityName = city;
     console.log("66. == ", request.cityName);
     next();
@@ -82,19 +86,43 @@ app.param('name', function(request, response, next){
 // Add a dynamic route to /cities. This should respond with the state that the city resides in.
 app.get('/cities/:name', function(request, response){
     var state = cities[request.cityName];
-    console.log("73. == " + state);
+    // console.log("89. == " + cities[request.cityName]);
+    console.log("89. == " + state);
     // document.getElementById('state').value = state;
     // $('#state').html(state);
-    response.json(state);
+    if(!state){
+        response.status(404).json('No state found for ' + request.params.name);
+    }
+    console.log("95. == " + cities[request.cityName]);
+    response.json(JSON.stringify(request.body);
     
+});
+
+app.post('/', parseUrlencoded, function(request, response){
+    // var newCity = request.body;
+    // cities[newCity.description] = newCity.description;
+    // response.status(201).json(cities[newCity.description]);
+    var newCity = request.body;
+    console.log("103. " + newCity.city);
+    cities[newCity.state] = newCity.state;
+    console.log("105. " + cities[newCity.state]);
+    response.status(201).json(cities[newCity.city]);
 });
 
 app.post('/cities', parseUrlencoded, function(request, response){
     var newCity = request.body;
-    cities[newCity.name] = newCity.description;
-    response.status(201).json(newCity.name);
+    console.log("111. " + JSON.stringify(newCity.city));
+    console.log("112. " + JSON.stringify(newCity.state));
+    cities[newCity.city] = newCity;
+    // cities[newCity.state] = JSON.stringify(newCity.state);
+    console.log("115. " + JSON.stringify(cities));
+    console.log("116. " + JSON.stringify(request.body));
+    console.log("117. " + newCity.city);
+    response.status(201).json(newCity.city);
 });
 
 app.listen(process.env.PORT, function(){
-    console.log('Listening on port ' + process.env.PORT + '\n');
+    console.log('Listening on port ' + process.env.PORT);
 });
+
+// response.write(JSON.stringify(request.body));
