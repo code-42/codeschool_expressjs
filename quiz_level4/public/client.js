@@ -13,8 +13,8 @@ $(function() {
             // content = '<a href="/cities/' + city + '">' + city + '</a>';
             content = '<a href="#" data-block="' + city + '"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>' +
                 '&nbsp; <a href="/cities/' + city + '">' + city + '</a>';
-            // list.push($('<li>', { html: content }));
-            list.push($('<li>' + content + '</li>'));
+            list.push($('<li>', { html: content }));
+            // list.push($('<li>' + content + '</li>'));
         }
         $('#city-list').html(list);
     };

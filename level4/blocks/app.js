@@ -101,7 +101,7 @@ app.listen(process.env.PORT, function(){
 
 // 4.6 Delete Route 250 pts
 
-// Create a Dynamic Route for deleting blocks and handle for cities that are not in our list.
+// Create a Dynamic Route for deleting blocks and handle for blocks that are not in our list.
 // Task 1/4 Create a DELETE route that takes the city name as its first argument, followed by a callback that takes a request and response objects as arguments.
 // Task 2/4 Use the built-in JavaScript operator delete (see MDN docs) to remove the property for the city passed as an argument. Don't forget to use the attribute set in app.param() to look the city up. 
 // Task 3/4 Use sendStatus() to respond back with a status code of 200.
@@ -122,10 +122,11 @@ app.listen(process.env.PORT, function(){
 //   request.cityName = parseCityName(request.params.name);
 // });
        
-// app.delete('/cities/:name', function(request, response){
-//   if(cities[request.cityName]){
-//     delete cities[request.cityName];
-//     response.sendStatus(200);
+app.delete('/blocks/:name', function(request, response){
+    delete blocks[request.blockName];
+//   if(blocks[request.cityName]){
+//     delete blocks[request.cityName];
+    response.sendStatus(200);
 //   } else {
 //     response.sendStatus(404);
 //   }
