@@ -30,6 +30,7 @@ var locations = {
 
 console.log("32. blocks.length == " + Object.keys(blocks).length);
 console.log("33. blocks == " + Object.keys(blocks));
+<<<<<<< HEAD
 console.log("34. description == " + Object.values(blocks));
 
 // root route
@@ -55,6 +56,28 @@ app.get('/description', function(request, response){
   // var blocks = ['Fixed', 'Movable', 'Rotating'];
   // returns all in blocks object
   response.json(Object.values(blocks));
+=======
+// console.log("34. description == " + Object.values(blocks));
+
+app.get('/blocks', function(request, response) {
+    if (request.query.limit > Object.keys(blocks).length) {
+        console.log("26.blocks.length == " + Object.keys(blocks).length + ", you requested " + request.query.limit);
+        response.status(400).json('Error 400. Limit is higher than the number of blocks available in the list');
+        response.end();
+    } else if (request.query.limit >= 1) {
+        console.log("\n30.request.limit == " + request.query.limit);
+        var key = '';
+        var keys = [];
+        for (key in blocks) {
+            console.log("63. key == " + key);
+            keys.push(key);
+        }
+        response.json(keys.slice(0, request.query.limit));
+    } else {
+        console.log("56.request.limit is 0 or omitted");
+        response.json(Object.keys(blocks));
+    }
+>>>>>>> level4
 });
 
 // called for routes which include the :name placeholder
@@ -87,13 +110,22 @@ app.post('/blocks', parseUrlencoded, function (request, response) {
   response.status(201).json(newBlock.name);
 });
 
-app.listen(process.env.PORT, function(){
-    console.log('Listening on port ' + process.env.PORT + '\n');
+app.delete('/blocks/:name', function(request, response){
+    console.log("99. inside app.delete()");
+    // delete blocks[request.blockName];
+    if(blocks[request.blockName]){
+        console.log("101. blockName == " + blocks[request.blockName]);
+        delete blocks[request.blockName];
+        response.sendStatus(200);
+    } else {
+        console.log("101. blockName not found");
+        response.sendStatus(404);
+    }
 });
 
 // 4.6 Delete Route 250 pts
 
-// Create a Dynamic Route for deleting blocks and handle for cities that are not in our list.
+// Create a Dynamic Route for deleting blocks and handle for blocks that are not in our list.
 // Task 1/4 Create a DELETE route that takes the city name as its first argument, followed by a callback that takes a request and response objects as arguments.
 // Task 2/4 Use the built-in JavaScript operator delete (see MDN docs) to remove the property for the city passed as an argument. Don't forget to use the attribute set in app.param() to look the city up. 
 // Task 3/4 Use sendStatus() to respond back with a status code of 200.
@@ -113,23 +145,23 @@ app.listen(process.env.PORT, function(){
 // app.param('name', function (request, response, next) {
 //   request.cityName = parseCityName(request.params.name);
 // });
-       
-// app.delete('/cities/:name', function(request, response){
-//   if(cities[request.cityName]){
-//     delete cities[request.cityName];
-//     response.sendStatus(200);
-//   } else {
-//     response.sendStatus(404);
-//   }
-
-// });
-
-// app.listen(process.env.PORT, function(){
-//     console.log('Listening on port ' + process.env.PORT + '\n');
-// });
 
 // function parseCityName(name) {
 //   var parsedName = name[0].toUpperCase() + name.slice(1).toLowerCase();
 //   return parsedName;
 // }
 
+app.listen(process.env.PORT, function(){
+    console.log('Listening on port ' + process.env.PORT + '\n');
+});
+
+
+
+// Level 5: routes
+// app.route('/blocks')
+//     .get(function(request, response){
+        
+//     })
+//     .post(parseUrlencoded, function(request, response){
+        
+//     });

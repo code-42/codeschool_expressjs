@@ -1,44 +1,64 @@
-$(function(){
+// quiz level 4
+$(function() {
+    console.log("2.found client.js");
 
-  $.get( '/blocks', appendToList); 
+    $.get('/cities', appendToList);
 
-  function appendToList(blocks) {
-    var list = [];
-    var content, block;
-    for(var i in blocks){
-      block = blocks[i];
-      // link to eac block's description
-      content = '<a href="/blocks/'+block+'">'+block+'</a>';
-      list.push($('<li>', { html: content }));
+    function appendToList(cities) {
+        var list = [];
+        var content, city;
+        for (var i in cities) {
+            city = cities[i];
+            
+            // link to each block's description
+            content = '<a href="#" data-block="' + city + '"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>' +
+                '&nbsp; <a href="/cities/' + city + '">' + city + '</a>';
+          
+            list.push($('<li>', { html: content }));
+            // list.push($('<li>' + content + '</li>'));
+        }
+        // $('.city-list').html(list);
+        $('.city-list').append(list);
     }
+
+    $('form').on('submit', function(event) {
+        event.preventDefault();
+        console.log("22. inside .on(submit)");
+        var form = $(this);
+        
+        // transforms the form tada to URL-encoded notation
+        var cityData = form.serialize();
+        console.log("26. cityData == " + cityData);
+
+        $.ajax({
+            type: 'POST',
+            url: '/cities',
+            data: cityData
+        }).done(function(cityName) {
+            console.log("33. cityName == " + cityName);
+            console.log("34. cityData == " + cityData);
+            appendToList([cityName]);
+            
+            // clean up form text input fields
+            form.trigger('reset');
+        });
+    });
     
-    $('.block-list').append(list);
-  }
-  
-<<<<<<< HEAD
-  $('form').on('submit', function(event){
+  $('.city-list').on('click','a[data-block]', function(event){
     event.preventDefault();
-    var form = $(this);
-    // serialize() transforms the form tada to URL-encoded notation
-=======
-  $('form').on('submit', funvtion(event){
-    event.preventDefault();
-    var form = $(this);
-    // transforms the form tada to URL-encoded notation
->>>>>>> level4
-    var blockData = form.serialize();
+    var target = $(event.currentTarget);
+    
+    console.log("43. inside .on(click) " + target.data('block'));
+    if (!confirm('Are you sure you want to remove ' + target.data('block') + '?')){
+      console.log("54. inside !confirm()");
+      return false;
+    } 
     
     $.ajax({
-      type: 'POST', url: '/blocks',  data: blockData
-    }).done(function(blockname){
-      // array with the new block as its single argument
-      appendToList([blockName]);
-<<<<<<< HEAD
-      // clear form text input fields
-=======
-      // clean up form text input fields
->>>>>>> level4
-      form.trigger('reset');
+      type: 'DELETE', url: '/cities/' + target.data('block')
+    }).done(function(){
+      console.log("52. inside .done()");
+      target.parents('li').remove();
     });
   });
 });
