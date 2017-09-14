@@ -38,5 +38,6 @@ $(function() {
             form.trigger('reset');
         });
         console.log("39. add city " + cityData);
+        $.get('/cities', appendToList);
     });
 });

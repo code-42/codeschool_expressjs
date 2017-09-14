@@ -104,8 +104,9 @@ app.post('/cities', parseUrlencoded, function(request, response) {
     var newCity = request.body;
     console.log("111. " + JSON.stringify(newCity.city));
     console.log("112. " + JSON.stringify(newCity.state));
-    cities[newCity.city] = newCity.city;
-    cities[newCity.state] = newCity.state;
+    // cities[newCity.city] = newCity.city;
+    // cities[newCity.state] = newCity.state;
+    cities[newCity.city] = newCity.state;
     // console.log("108. " + cities[newCity.city]);
     // console.log("109. " + cities[newCity.state]);
     // cities[newCity.state] = JSON.stringify(newCity.state);
