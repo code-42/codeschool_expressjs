@@ -82,42 +82,31 @@ app.param('name', function(request, response, next) {
 // Add a dynamic route to /cities. This should respond with the state that the city resides in.
 app.get('/cities/:name', function(request, response) {
     var state = cities[request.cityName];
-    // console.log("73. == ", cities[request.cityName]);
-    // document.getElementById('state').value = state;
-    // $('#state').html(state);
     if (!state) {
         response.status(404).json('No state found for ' + request.params.name);
+    } else {
+        console.log("91. state == " + state);    
+        response.json(state); 
     }
-    response.json(state);
-
 });
-
-// app.post('/', parseUrlencoded, function(request, response) {
-//     var newCity = request.body;
-//     console.log("103. " + newCity.city);
-//     cities[newCity.state] = newCity.state;
-//     console.log("105. " + cities[newCity.state]);
-//     response.status(201).json(cities[newCity.city]);
-// });
 
 app.post('/cities', parseUrlencoded, function(request, response) {
     var newCity = request.body;
-    console.log("111. " + JSON.stringify(newCity.city));
-    console.log("112. " + JSON.stringify(newCity.state));
-    // cities[newCity.city] = newCity.city;
-    // cities[newCity.state] = newCity.state;
     cities[newCity.city] = newCity.state;
-    // console.log("108. " + cities[newCity.city]);
-    // console.log("109. " + cities[newCity.state]);
-    // cities[newCity.state] = JSON.stringify(newCity.state);
-    console.log("115. " + JSON.stringify(cities));
-    console.log("116. " + JSON.stringify(request.body));
-    console.log("117. " + newCity.city);
     response.status(201).json(newCity.city);
+});
+
+app.delete('/cities/:name', function(request, response){
+    if(cities[request.cityName]){
+        console.log("101. blockName == " + cities[request.cityName]);
+        delete cities[request.cityName];
+        response.sendStatus(200);
+    } else {
+        console.log("101. cityName not found");
+        response.sendStatus(404);
+    }
 });
 
 app.listen(process.env.PORT, function() {
     console.log('Listening on port ' + process.env.PORT + '\n');
 });
-
-// app.listen(8000);

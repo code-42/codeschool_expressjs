@@ -24,20 +24,6 @@ console.log("32. blocks.length == " + Object.keys(blocks).length);
 console.log("33. blocks == " + Object.keys(blocks));
 // console.log("34. description == " + Object.values(blocks));
 
-// root route
-// app.get('/', function(request, response){
-//   // var blocks = ['Fixed', 'Movable', 'Rotating'];
-//   // returns all in blocks object
-//   response.json(Object.keys(blocks));
-// });
-
-// blocks route
-// app.get('/blocks', function(request, response){
-//   // var blocks = ['Fixed', 'Movable', 'Rotating'];
-//   // returns all in blocks object
-//   response.send(Object.keys(blocks));
-// });
-
 app.get('/blocks', function(request, response) {
     if (request.query.limit > Object.keys(blocks).length) {
         console.log("26.blocks.length == " + Object.keys(blocks).length + ", you requested " + request.query.limit);
@@ -56,13 +42,6 @@ app.get('/blocks', function(request, response) {
         console.log("56.request.limit is 0 or omitted");
         response.json(Object.keys(blocks));
     }
-});
-
-// blocks route
-app.get('/description', function(request, response){
-  // var blocks = ['Fixed', 'Movable', 'Rotating'];
-  // returns all in blocks object
-  response.json(Object.values(blocks));
 });
 
 // called for routes which include the :name placeholder
@@ -95,8 +74,17 @@ app.post('/blocks', parseUrlencoded, function (request, response) {
   response.status(201).json(newBlock.name);
 });
 
-app.listen(process.env.PORT, function(){
-    console.log('Listening on port ' + process.env.PORT + '\n');
+app.delete('/blocks/:name', function(request, response){
+    console.log("99. inside app.delete()");
+    // delete blocks[request.blockName];
+    if(blocks[request.blockName]){
+        console.log("101. blockName == " + blocks[request.blockName]);
+        delete blocks[request.blockName];
+        response.sendStatus(200);
+    } else {
+        console.log("101. blockName not found");
+        response.sendStatus(404);
+    }
 });
 
 // 4.6 Delete Route 250 pts
@@ -121,24 +109,23 @@ app.listen(process.env.PORT, function(){
 // app.param('name', function (request, response, next) {
 //   request.cityName = parseCityName(request.params.name);
 // });
-       
-app.delete('/blocks/:name', function(request, response){
-    delete blocks[request.blockName];
-//   if(blocks[request.cityName]){
-//     delete blocks[request.cityName];
-    response.sendStatus(200);
-//   } else {
-//     response.sendStatus(404);
-//   }
-
-// });
-
-// app.listen(process.env.PORT, function(){
-//     console.log('Listening on port ' + process.env.PORT + '\n');
-// });
 
 // function parseCityName(name) {
 //   var parsedName = name[0].toUpperCase() + name.slice(1).toLowerCase();
 //   return parsedName;
 // }
 
+app.listen(process.env.PORT, function(){
+    console.log('Listening on port ' + process.env.PORT + '\n');
+});
+
+
+
+// Level 5: routes
+// app.route('/blocks')
+//     .get(function(request, response){
+        
+//     })
+//     .post(parseUrlencoded, function(request, response){
+        
+//     });
