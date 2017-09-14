@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Jello Express</title>
+    <meta charset="UTF-8">
+    <title>Jello Express</title>
 </head>
+
 <body>
-  <header>
-    <h1>Cities</h1>
-    <form>
-      <legend>New City</legend>
-      <input name="city" placeholder="City"><br/>
-      <input name="state" placeholder="State">
-      <input type="submit" value="Click Me">
-      
-      <ul id='city-list'>
-        
-      </ul>
-      <span id='state'></span>
-    </form>
-  </header>
-  
-  <script src="jquery.js"></script>
-  <script src="client.js"></script>
+    <header>
+        <h1>Cities</h1>
+        <form>
+            <legend>New City</legend>
+            <input name="city" required="true" minlength="4"><br/>
+            <input name="state" required="true" minlength="2">
+            <input type="submit" value="Click Me">
+
+            <ul id='city-list'>
+
+            </ul>
+            <span id='state'></span>
+        </form>
+    </header>
+
+    <script src="jquery.js"></script>
+    <script src="client.js"></script>
 </body>
+
 </html>
