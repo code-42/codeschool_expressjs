@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <script src="https://use.fontawesome.com/e04bfbdf23.js"></script>
     <title>Jello Express</title>
 </head>
 
@@ -11,11 +12,11 @@
         <h1>Cities</h1>
         <form>
             <legend>New City</legend>
-            <input name="city" required="true" minlength="4"><br/>
-            <input name="state" required="true" minlength="2">
+            <input name="city" required="true" minlength="4" placeholder="city"><br/>
+            <input name="state" required="true" minlength="2" placeholder="state">
             <input type="submit" value="Click Me">
 
-            <ul id='city-list'>
+            <ul id='city-list' style='list-style:none'>
 
             </ul>
             <span id='state'></span>
