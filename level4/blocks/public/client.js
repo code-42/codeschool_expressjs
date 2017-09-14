@@ -12,7 +12,9 @@ $(function(){
     for(var i in blocks){
       block = blocks[i];
       // link to eac block's description
-      content = '<a href="/blocks/'+block+'">'+block+'</a>';
+      // content = '<a href="/blocks/'+block+'">'+block+'</a>';
+      content = '<a href="#" data-block="' + block + '"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>' +
+        '&nbsp; <a href="/blocks/' + block + '">' + block + '</a>';
       list.push($('<li>', { html: content }));
     }
     
@@ -38,24 +40,3 @@ $(function(){
   });
 });
 
-
-// backup level 3
-  // $.get( '/blocks', appendToList); 
-
-  // function appendToList(blocks) {
-  //   var list = [];
-  //   for(var i in blocks){
-  //     list.push($('<li>', { text: blocks[i] }));
-  //   }
-  //   $('.block-list').append(list);
-  // }
-  
-  // $.get( '/description', appendToList); 
-  
-  // function appendToList(blocks) {
-  //   var list = [];
-  //   for(var i in blocks){
-  //     list.push($('<li>', { text: blocks[i] }));
-  //   }
-  //   $('.block-list').append(list);
-  // }

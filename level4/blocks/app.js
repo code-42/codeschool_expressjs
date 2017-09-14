@@ -22,20 +22,40 @@ var locations = {
 
 console.log("32. blocks.length == " + Object.keys(blocks).length);
 console.log("33. blocks == " + Object.keys(blocks));
-console.log("34. description == " + Object.values(blocks));
+// console.log("34. description == " + Object.values(blocks));
 
 // root route
-app.get('/', function(request, response){
-  // var blocks = ['Fixed', 'Movable', 'Rotating'];
-  // returns all in blocks object
-  response.json(Object.keys(blocks));
-});
+// app.get('/', function(request, response){
+//   // var blocks = ['Fixed', 'Movable', 'Rotating'];
+//   // returns all in blocks object
+//   response.json(Object.keys(blocks));
+// });
 
 // blocks route
-app.get('/blocks', function(request, response){
-  // var blocks = ['Fixed', 'Movable', 'Rotating'];
-  // returns all in blocks object
-  response.send(Object.keys(blocks));
+// app.get('/blocks', function(request, response){
+//   // var blocks = ['Fixed', 'Movable', 'Rotating'];
+//   // returns all in blocks object
+//   response.send(Object.keys(blocks));
+// });
+
+app.get('/blocks', function(request, response) {
+    if (request.query.limit > Object.keys(blocks).length) {
+        console.log("26.blocks.length == " + Object.keys(blocks).length + ", you requested " + request.query.limit);
+        response.status(400).json('Error 400. Limit is higher than the number of blocks available in the list');
+        response.end();
+    } else if (request.query.limit >= 1) {
+        console.log("\n30.request.limit == " + request.query.limit);
+        var key = '';
+        var keys = [];
+        for (key in blocks) {
+            console.log("63. key == " + key);
+            keys.push(key);
+        }
+        response.json(keys.slice(0, request.query.limit));
+    } else {
+        console.log("56.request.limit is 0 or omitted");
+        response.json(Object.keys(blocks));
+    }
 });
 
 // blocks route
