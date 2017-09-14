@@ -3,11 +3,19 @@
 var express = require('express');
 var app = express();
 
+<<<<<<< HEAD
 app.use(express.static('public'));
 
 var bodyParser = require('body-parser');
 var parseUrlencoded = bodyParser.urlencoded({ extended: false });
 
+=======
+var bodyParser = require('body-parser');
+var parseUrlencoded = bodyParser.urlencoded({ extended: false });
+
+app.use(express.static('public'));
+
+>>>>>>> level4
 var blocks = {
     'Fixed': 'Fastened securely in position',
     'Movable': 'Capable of being moved',
@@ -35,7 +43,11 @@ app.get('/', function(request, response){
 app.get('/blocks', function(request, response){
   // var blocks = ['Fixed', 'Movable', 'Rotating'];
   // returns all in blocks object
+<<<<<<< HEAD
   response.json(Object.keys(blocks));
+=======
+  response.send(Object.keys(blocks));
+>>>>>>> level4
 });
 
 // blocks route
